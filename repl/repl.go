@@ -16,12 +16,12 @@ func Start(in io.Reader, out io.Writer) {
 	for {
 		fmt.Fprint(out, PROMPT)
 		scanned := scanner.Scan()
+		line := scanner.Text()
 
-		if !scanned {
+		if !scanned || line == "exit" {
 			return
 		}
 
-		line := scanner.Text()
 		l := lexer.New(line)
 
 		for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
